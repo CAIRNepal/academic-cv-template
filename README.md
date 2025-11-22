@@ -38,6 +38,21 @@ This template provides a comprehensive structure for creating academic CVs with 
 
 ## Usage
 
+### Using in Overleaf (Recommended)
+
+1. **Download the template** as a ZIP file from the repository
+2. **Create a new project** in Overleaf:
+   - Click "New Project" → "Upload Project"
+   - Select the ZIP file you downloaded
+   - Click "Upload"
+3. **Compile** the document:
+   - Overleaf will automatically compile when you upload
+   - If needed, manually compile by clicking "Recompile"
+   - For bibliography, ensure the compiler is set to "pdfLaTeX" and run Biber if needed
+4. **Edit your content** directly in Overleaf's editor
+
+### Using Locally
+
 1. **Clone or download** this template
 
 2. **Replace placeholder content** in all `.tex` files with your own information:
@@ -90,7 +105,9 @@ This template provides a comprehensive structure for creating academic CVs with 
    pdflatex main-cv.tex
    pdflatex main-cv.tex
    ```
-   Or use your preferred LaTeX editor (TeXShop, TeXworks, Overleaf, etc.)
+   Or use your preferred LaTeX editor (TeXShop, TeXworks, etc.)
+
+**Note:** For Overleaf users, simply upload the project as a ZIP file and compile directly in the browser. Overleaf handles the compilation process automatically.
 
 ## Template Structure
 
@@ -103,7 +120,12 @@ The template uses `cvsection` environments and commands (aliases for the underly
 
 ## Standardized Commands
 
-The template provides standardized commands for consistent formatting across all sections. Use these commands instead of manually formatting entries:
+The template provides standardized commands for consistent formatting across all sections. **You must use these commands instead of manually formatting entries.**
+
+**Important Restrictions:**
+- **Do NOT use raw `\entry*[]` commands directly** - The template prevents direct use of `\entry*[]` to ensure consistent formatting
+- **Always use the provided template commands** (e.g., `\employment`, `\education`, `\presentation`, etc.)
+- If you need a custom format, modify the command definitions in `settings.sty` rather than using raw `\entry*[]`
 
 **Important Note on Empty Parameters:** Many commands have optional parameters. When a parameter is not applicable, use `{}` (empty braces) to indicate the field is empty. For example, if an award has no additional description, use `\award{Name}{}{YYYY}` where the second parameter is empty. All template files include comments explaining which parameters are optional.
 

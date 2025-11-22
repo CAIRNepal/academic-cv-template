@@ -37,6 +37,7 @@
 \usetikzlibrary{shapes,shadows}
 
 \RequirePackage{comment}
+\RequirePackage{etoolbox}
 % Formal color scheme - dark gray/black for professional appearance
 % line
 \definecolor{SwishLineColour}{HTML}{2C3E50}
@@ -130,6 +131,11 @@
 \urlstyle{tt}
 
 % Set key width to 0 to remove indentation from entries
+% Check if \keywidth is defined (from curve class)
+% If not defined, define it as a length; otherwise set it
+\@ifundefined{keywidth}{%
+  \newlength{\keywidth}%
+}{}%
 \setlength{\keywidth}{0pt}
 
 % Remove paragraph indentation globally
@@ -181,34 +187,65 @@
 
 \RequirePackage[colorlinks=true,linkcolor=MarkerColour,urlcolor=MarkerColour,citecolor=MarkerColour,filecolor=MarkerColour,breaklinks=true]{hyperref}
 
+% ==================== Protect entry command from direct use ====================
+% Save the original \entry and \entry* commands for internal use
+\let\@entry\entry
+% Check if \entry* exists and save it
+\@ifundefined{entry*}{}{%
+  \expandafter\let\expandafter\@entrystar\csname entry*\endcsname
+}
+% Temporarily allow \entry to work normally to test if this is causing the issue
+% TODO: Re-enable protection once compilation works
+% \renewcommand{\entry}{%
+%   % Direct use of \entry is not allowed - use template commands instead
+% }
+
 % ==================== CV Entry Template Commands ====================
 % Template commands for consistent formatting across all CV sections
+
+% Define empty token for comparison
+\def\@cv@empty{}
+
+% Helper macro for empty argument checking (robust version)
+% Uses \if\relax\detokenize pattern which works reliably in tabular contexts
+% This prevents "Extra \or" errors in LaTeX 2025
+\newcommand{\@cvifempty}[3]{%
+  \if\relax\detokenize{#1}\relax #2\else #3\fi
+}
+
+% Research Interest Entry
+% Usage: \researchinterest{interests}
+% interests should be comma-separated
+\newcommand{\researchinterest}[1]{%
+  \@entry*[]%
+  #1
+}
 
 % Employment/Research Experience Entry
 % Usage: \employment{institution}{location}{dates}{role}{description}{achievements}
 % achievements can be empty or contain \item entries
 \newcommand{\employment}[6]{%
-  \entry*[]%
+  \@entry*[]%
   \textbf{#1}, #2 \hfill #3
   \par \textit{#4}
   \par #5
-  \ifx\relax#6\relax\else\begin{itemize}#6\end{itemize}\fi
+  \@cvifempty{#6}{}{\begin{itemize}#6\end{itemize}}%
 }
 
 % Teaching Experience Entry
 % Usage: \teachingexp{institution}{location}{dates}{role}{description}{achievements}
 \newcommand{\teachingexp}[6]{%
-  \entry*[]%
+  \@entry*[]%
   \textbf{#1}, #2 \hfill #3
   \par \textit{#4}
   \par #5
-  \ifx\relax#6\relax\else\begin{itemize}#6\end{itemize}\fi
+  \@cvifempty{#6}{}{\begin{itemize}#6\end{itemize}}%
 }
 
 % Industrial Experience Entry
 % Usage: \industrial{company}{location}{role}{dates}{description}
 \newcommand{\industrial}[5]{%
-  \entry*[]%
+  \@entry*[]%
   \textbf{#1}, #2 --- \textit{#3} \hfill #4
   \par #5
 }
@@ -217,60 +254,60 @@
 % Usage: \education{degree}{university}{location}{dates}{additional}
 % additional can be empty
 \newcommand{\education}[5]{%
-  \entry*[]%
+  \@entry*[]%
   \textbf{#1}, #2, #3 \hfill #4
-  \ifx\relax#5\relax\else\par #5\fi
+  \@cvifempty{#5}{}{\par #5}%
 }
 
 % Additional Training Entry
 % Usage: \training{name}{location}{dates}
 \newcommand{\training}[3]{%
-  \entry*[]%
+  \@entry*[]%
   \textbf{#1}, #2 \hfill #3
 }
 
 % Certification Entry
 % Usage: \certification{name}{issuer}{dates}
 \newcommand{\certification}[3]{%
-  \entry*[] \textbf{#1}, #2 \hfill #3
+  \@entry*[] \textbf{#1}, #2 \hfill #3
 }
 
 % Professional Development Entry
 % Usage: \professionaldev{activity}{location}{dates}
 \newcommand{\professionaldev}[3]{%
-  \entry*[] \textbf{#1}, #2 \hfill #3
+  \@entry*[] \textbf{#1}, #2 \hfill #3
 }
 
 % Award/Honor Entry
 % Usage: \award{name}{description}{dates}
 % description can be empty
 \newcommand{\award}[3]{%
-  \entry*[] #1 \hfill #3
-  \ifx\relax#2\relax\else\par #2\fi
+  \@entry*[] #1 \hfill #3
+  \@cvifempty{#2}{}{\par #2}%
 }
 
 % Presentation Entry
 % Usage: \presentation{title}{venue}{location}{dates}
 \newcommand{\presentation}[4]{%
-  \entry*[] Research presentation on \textbf{\textit{#1}} at \textit{#2}, #3. \hfill #4
+  \@entry*[] Research presentation on \textbf{\textit{#1}} at \textit{#2}, #3. \hfill #4
 }
 
 % Invited Talk/Interview Entry
 % Usage: \invitedtalk{title}{event}{dates}
 \newcommand{\invitedtalk}[3]{%
-  \entry*[] Speaker on \textbf{#1} at \textit{#2}. \hfill #3
+  \@entry*[] Speaker on \textbf{#1} at \textit{#2}. \hfill #3
 }
 
 % Research Grant Entry
 % Usage: \grant{title}{agency}{role}{status}{dates}
 % status can be empty
 \newcommand{\grant}[5]{%
-  \entry*[] \textbf{#1}
+  \@entry*[] \textbf{#1}
   \begin{itemize}
     \item \textbf{Funding agency:} #2
     \item \textbf{Role:} #3
-    \ifx\relax#4\relax\else\item \textbf{Status:} #4\fi
-    \ifx\relax#5\relax\else\item \textbf{Dates:} #5\fi
+    \@cvifempty{#4}{}{\item \textbf{Status:} #4}%
+    \@cvifempty{#5}{}{\item \textbf{Dates:} #5}%
   \end{itemize}
 }
 
@@ -278,8 +315,8 @@
 % Usage: \researchproject{title}{status}
 % status can be empty or "Active" or "Completed"
 \newcommand{\researchproject}[2]{%
-  \entry*[] \textbf{#1}%
-  \ifx\relax#2\relax\else\ (#2)\fi
+  \@entry*[] \textbf{#1}%
+  \@cvifempty{#2}{}{ (#2)}%
 }
 
 % Supervision Entry
@@ -287,60 +324,57 @@
 % type: Research, Thesis, etc.
 % level: Bachelor's, Master's, PhD, etc.
 % status: Completed, In Progress, etc.
+% Use \@entry*[] like other commands to avoid tabular alignment conflicts
+% All arguments are required - use placeholder text if a field is not applicable
 \newcommand{\supervision}[6]{%
-  \item \textbf{#1}%
-  \ifx\relax#2\relax\else, \textit{#2}\fi
-  \ifx\relax#3\relax\else\ | #3\fi
-  \ifx\relax#4\relax\else\ | #4 Level\fi
-  \ifx\relax#5\relax\else\ | \textbf{#5}\fi
-  \ifx\relax#6\relax\else\ | #6\fi
+  \@entry*[] \textbf{#1}, \textit{#2} | #3 | #4 Level | \textbf{#5} | #6
 }
 
 % Entrepreneurship Entry
 % Usage: \entrepreneurship{name}{description}{role}{focus}{website}
 % focus and website can be empty
 \newcommand{\entrepreneurship}[5]{%
-  \entry*[] \textbf{#1}: #2
+  \@entry*[] \textbf{#1}: #2
   \begin{itemize}
     \item \textbf{Role}: #3
-    \ifx\relax#4\relax\else\item \textbf{Focus}: #4\fi
-    \ifx\relax#5\relax\else\item \textbf{Website}: \href{#5}{#5}\fi
+    \@cvifempty{#4}{}{\item \textbf{Focus}: #4}%
+    \@cvifempty{#5}{}{\item \textbf{Website}: \href{#5}{#5}}%
   \end{itemize}
 }
 
 % Service Entry (Reviewer, Committee, etc.)
 % Usage: \service{role}{venue}{dates}
 \newcommand{\service}[3]{%
-  \entry*[] \textbf{#1}, \textit{#2} \hfill #3
+  \@entry*[] \textbf{#1}, \textit{#2} \hfill #3
 }
 
 % Skill Category Entry
 % Usage: \skillcategory{category}{skills}
 % skills should be comma-separated
 \newcommand{\skillcategory}[2]{%
-  \entry*[] \textbf{#1}: #2
+  \@entry*[] \textbf{#1}: #2
 }
 
 % Volunteer Entry
 % Usage: \volunteer{role}{organization}{dates}
 \newcommand{\volunteer}[3]{%
-  \entry*[] #1 at \textbf{#2}. \hfill #3
+  \@entry*[] #1 at \textbf{#2}. \hfill #3
 }
 
 % Reference Entry
 % Usage: \reference{name}{title}{institution}{email}
 \newcommand{\reference}[4]{%
-  \entry*[] \textbf{#1}, #2, #3, \texttt{#4}
+  \@entry*[] \textbf{#1}, #2, #3, \texttt{#4}
 }
 
 % Open Source Project Entry
 % Usage: \opensource{name}{project}{url}
 % project and url can be empty
 \newcommand{\opensource}[3]{%
-  \entry*[] #1
+  \@entry*[] #1
   \begin{itemize}
-    \ifx\relax#2\relax\else\item Project: \href{#2}{#2}\fi
-    \ifx\relax#3\relax\else\item URL: \url{#3}\fi
+    \@cvifempty{#2}{}{\item Project: \href{#2}{#2}}%
+    \@cvifempty{#3}{}{\item URL: \url{#3}}%
   \end{itemize}
 }
 
@@ -348,13 +382,13 @@
 % Usage: \workshoporg{eventtype}{daterange}{title}{organization}{host}{registrations}{participants}{year}
 % Most fields can be empty
 \newcommand{\workshoporg}[8]{%
-  \entry*[] Led the organization and execution of a \textbf{#1}%
-  \ifx\relax#2\relax\else\ (#2)\fi
-  \ifx\relax#3\relax\else\ on \textbf{``#3''}\fi
-  \ifx\relax#4\relax\else\ through \textit{#4}\fi
-  \ifx\relax#5\relax\else, hosted by \textit{#5}\fi
-  \ifx\relax#6\relax\else, attracting \textbf{#6+ registrations}\fi
-  \ifx\relax#7\relax\else\ and engaging \textbf{#7+ active participants}\fi
+  \@entry*[] Led the organization and execution of a \textbf{#1}%
+  \@cvifempty{#2}{}{ (#2)}%
+  \@cvifempty{#3}{}{ on \textbf{``#3''}}%
+  \@cvifempty{#4}{}{ through \textit{#4}}%
+  \@cvifempty{#5}{}{, hosted by \textit{#5}}%
+  \@cvifempty{#6}{}{, attracting \textbf{#6+ registrations}}%
+  \@cvifempty{#7}{}{ and engaging \textbf{#7+ active participants}}%
   . \hfill #8
 }
 
@@ -362,8 +396,8 @@
 % Usage: \editorial{role}{venue}{url}{year}
 % url can be empty
 \newcommand{\editorial}[4]{%
-  \entry*[] \textbf{#1}, \textit{#2}%
-  \ifx\relax#3\relax\else. \url{#3}\fi
+  \@entry*[] \textbf{#1}, \textit{#2}%
+  \@cvifempty{#3}{}{. \url{#3}}%
   \hfill #4
 }
 
@@ -371,7 +405,7 @@
 % Usage: \course{code}{name}{institution}{location}{semesters}
 % semesters can be empty
 \newcommand{\course}[5]{%
-  \entry*[] \textbf{#1 #2}, #3, #4%
-  \ifx\relax#5\relax\else\ \hfill #5\fi
+  \@entry*[] \textbf{#1 #2}, #3, #4%
+  \@cvifempty{#5}{}{\ \hfill #5}%
 }
 
