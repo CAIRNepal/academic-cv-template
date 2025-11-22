@@ -231,16 +231,16 @@ The template provides standardized commands for consistent formatting across all
 ```latex
 \supervision{student}{project}{type}{level}{year}{status}
 ```
-- Use within `\begin{itemize}...\end{itemize}`
 - `level` (4th parameter) is optional - use `{}` if not specifying degree level
 - `status` (6th parameter) is optional - use `{}` if not needed
+- All arguments are required - use placeholder text if a field is not applicable
+- **Note:** Do NOT use within `\begin{itemize}...\end{itemize}` - the command handles formatting automatically
 
 **Examples:**
 ```latex
-\begin{itemize}
 \supervision{John Doe}{Machine Learning Project}{Research}{Master's}{2023}{Completed}
 \supervision{Jane Smith}{Project Title}{Research}{}{2024}{}
-\end{itemize}
+\supervision{Student Name}{Thesis Title}{Thesis}{Bachelor's}{2023}{Completed}
 ```
 
 ### Entrepreneurship
