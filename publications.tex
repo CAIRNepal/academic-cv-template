@@ -1,0 +1,32 @@
+%%%%%%%%%%%%%%%
+% Curriculum Vitae Template
+% Academic CV Template
+% Replace with your information
+%
+
+%% Sometimes when a section can't be nicely modelled with the \entry[]... mechanism; hack our own
+\makecvsectionhead{Research Publications}
+Note: Publication title marked by $^+$ indicates equal contribution.
+%% Assuming you've already given \addbibresource{publication.bib} in the main doc. Right? Right???
+\nocite{*}
+
+%% If you just want everything in one list
+% \printbibliography[heading={none}]
+
+\printbibliography[heading={subbibliography},title={Journal Articles},type=article]
+
+\printbibliography[heading={subbibliography},title={Conference Proceedings},type=inproceedings]
+
+\printbibliography[heading={subbibliography},title={Posters},type=posters]
+
+
+\printbibliography[heading={subbibliography},title={Books and Chapters},filter={booksandchapters}]
+
+\printbibliography[heading={subbibliography},title={Book (s)},type=booksinpublication]
+
+\printbibliography[heading={subbibliography},title={Manuscript Under Review},type=underreview]
+\printbibliography[heading={subbibliography},title={Preprint},type=preprint]
+\printbibliography[heading={subbibliography},title={Book (s) In Progress},type=booksinprogress]
+
+\printbibliography[heading={subbibliography},title={Manuscript In Progress},type=draftinprogress]
+

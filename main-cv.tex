@@ -1,0 +1,113 @@
+%%%%%%%%%%%%%%%
+% Curriculum Vitae Template
+% Academic CV Template
+% CAIR-Nepal
+% info@cair-nepal.org
+%
+
+\documentclass[a4paper,skipsamekey,11pt,english]{curve}
+
+% Uncomment to enable Chinese; needs XeLaTeX
+% \usepackage{ctex}
+
+
+\usepackage{settings}
+\usepackage{etaremune}
+% Hyperlink colors - will be set by settings.sty
+
+% \usepackage{fontawesome}
+
+% Change the fonts if you want
+\ifxetexorluatex % If you're using XeLaTeX or LuaLaTeX
+  \usepackage{fontspec} 
+  %% You can use \setmainfont etc; I'm just using these font packages here because they provide OpenType fonts for use by XeLaTeX/LuaLaTeX anyway
+  \usepackage[p,osf,swashQ]{cochineal}
+  \usepackage[medium,bold]{cabin}
+  \usepackage[varqu,varl,scale=0.9]{zi4}
+\else % If you're using pdfLaTeX or latex
+  \usepackage[T1]{fontenc}
+  \usepackage[p,osf,swashQ]{cochineal}
+  \usepackage{cabin}
+  \usepackage[varqu,varl,scale=0.9]{zi4}
+\fi
+
+%% Only needed if you want a Publication List 
+
+\addbibresource{publication.bib}
+
+%% Specify your last name and first name (as given in the .bib) to automatically bold your own name in the publications list. One caveat: You need to write \bibnamedelima where there's a space in your name for this to work properly for now...
+\myname{LastName}{First\bibnamedelima Name}
+% \myname{d'Andrimont}{Raphaël}
+
+% Change the page margins if you want
+% \geometry{left=1cm,right=1cm,top=1.5cm,bottom=1.5cm}
+
+% Professional color scheme defined in settings.sty
+% Change the item prefix marker if you want
+% \prefixmarker{$\diamond$}
+
+%% Photo is only shown if "fullonly" is included
+\includecomment{fullonly}
+% \excludecomment{fullonly}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\leftheader{%
+  {\LARGE\bfseries\sffamily Your Name, PhD\\}
+  \vspace{0.3em}
+  \begin{FlushLeft}
+  \makefield{\faEnvelope[regular]}{\texttt{info@cair-nepal.org}}
+  \makefield{\faGlobe}{\href{https://yourwebsite.com}{yourwebsite.com}}
+  \makefield{\faGraduationCap}{\href{https://scholar.google.com/citations?user=YOURID}{Google Scholar}}
+  \makefield{\faLinkedin}{\href{http://linkedin.com/in/yourprofile}{linkedin.com/in/yourprofile}}
+  \makefield{\faResearchgate}{\href{https://www.researchgate.net/profile/Your-Name}{ResearchGate}}
+  \makefield{\faLanguage}{Language 1 | Language 2 | Language 3}
+  \end{FlushLeft}
+}
+% | Estonian (A1)
+
+\rightheader{~}
+\begin{fullonly}
+% \photo[r]{photo}
+% \photoscale{0.13}
+% Uncomment and add your photo filename above if you want to include a photo
+\end{fullonly}
+
+\title{} %Curriculum Vitae
+
+\begin{document}
+\makeheaders[c]
+\makecvsection{research_interest}
+% \makecvsection{skills}
+% \makecvsection{certifications}
+\makecvsection{education}
+% research experience
+\makecvsection{employment}
+% teaching experience
+\makecvsection{teaching_experience}
+% industrial experience
+\makecvsection{industrial}
+\makecvsection{honours-and-awards}
+\makecvsection{teaching}
+\makecvsection{supervision}
+\makecvsection{entrepreneur}
+% If you're not a researcher nor an academic, you probably don't have any publications; delete this line.
+%% Sometimes when a section can't be nicely modelled with the \entry[]... mechanism; hack our own and use \input NOT \makecvsection
+\input{publications}
+\makecvsection{presentations}
+\makecvsection{press}
+\makecvsection{grants}
+\makecvsection{research_and_projects}
+\makecvsection{opensource}
+\makecvsection{scholar_services}
+\makecvsection{volunteer}
+\makecvsection{skills}
+\makecvsection{certifications}
+\makecvsection{professional_development}
+
+\makecvsection{referee}
+% \input{referee-full}
+
+\end{document}

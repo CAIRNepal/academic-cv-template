@@ -1,0 +1,377 @@
+%%%%%%%%%%%%%%%
+% Curriculum Vitae Template
+% Academic CV Template
+% CAIR-Nepal
+% info@cair-nepal.org
+%
+
+\RequirePackage{silence}
+\WarningsOff[longtable]
+\WarningsOff[array]
+
+\usepackage{ifxetex,ifluatex}
+\newif\ifxetexorluatex
+\ifxetex
+  \xetexorluatextrue
+\else
+  \ifluatex
+    \xetexorluatextrue
+  \else
+    \xetexorluatexfalse
+  \fi
+\fi
+
+\RequirePackage{graphicx}
+\RequirePackage[hyphens]{url}
+\RequirePackage{babel}
+\raggedright
+% http://www.ipgp.fr/~moguilny/LaTeX/fontawesome5Icons.pdf
+\RequirePackage[fixed]{fontawesome5}
+
+\newcommand{\smallcaps}[1]{\textsc{\lowercase{#1}}}
+
+\RequirePackage[a4paper,nohead,nofoot,hmargin=2cm,vmargin=1.8cm]{geometry}
+\RequirePackage{relsize}
+\RequirePackage[dvipsnames,svgnames]{xcolor}
+\RequirePackage{tikz}
+\usetikzlibrary{shapes,shadows}
+
+\RequirePackage{comment}
+% Formal color scheme - dark gray/black for professional appearance
+% line
+\definecolor{SwishLineColour}{HTML}{2C3E50}
+% icon - professional dark blue-gray
+\definecolor{MarkerColour}{HTML}{34495E}
+
+% If you're not a researcher nor an academic, you probably don't need biblatex; delete this line.
+\RequirePackage[bibstyle=apa6,sorting=ymdnt,uniquename=init,defernumbers=true]{biblatex}
+\RequirePackage{csquotes}
+%% Added 17 Jan 2018 from https://tex.stackexchange.com/a/140641/226 and https://tex.stackexchange.com/a/46879/226
+\DeclareSortingTemplate{ymdnt}{
+  \sort{
+    \field{presort}
+  }
+  \sort[final]{
+    \field{sortkey}
+  }
+  \sort[direction=descending]{
+    \field[strside=left,strwidth=4]{sortyear}
+    \field[strside=left,strwidth=4]{year}
+    \literal{9999}
+  }
+  \sort[direction=descending]{
+    \field[padside=left,padwidth=2,padchar=0]{month}
+    \literal{00}
+  }
+  \sort[direction=descending]{
+    \field[padside=left,padwidth=2,padchar=0]{day}
+    \literal{00}
+  }
+  \sort{
+    \field{sortname}
+    \field{author}
+    \field{editor}
+    \field{translator}
+    \field{sorttitle}
+    \field{title}
+  }
+  \sort{
+    \field{sorttitle}
+    \field{title}
+  }
+}
+
+\RequirePackage{tikz}
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+   \node[shape=circle,text=white,fill=MarkerColour,font=\sffamily\scriptsize\bfseries,inner sep=1pt,text height=1.35ex,minimum width=1.5em,text centered] (char) {#1};}}
+   
+\newcounter{bibitem}
+\AtBeginBibliography{\setcounter{bibitem}{1}}
+\AtEveryBibitem{\makebox[2.5em][l]{\circled{\thebibitem}\stepcounter{bibitem}}}
+
+% \renewcommand{\bibfont}{\small}
+\setlength{\bibitemsep}{1.5ex}
+\setlength{\bibhang}{2.5em}
+\RequirePackage{xpatch}
+\xpretofieldformat{doi}
+  {\textcolor{MarkerColour}{\scriptsize\faLink}}
+  {}{}
+\xpretofieldformat{url}
+  {\textcolor{MarkerColour}{\scriptsize\faLink}}
+  {}{}
+  % impact factor
+% \xpretofieldformat{if}
+%   {{#1}}
+%   {}{}
+
+\headerscale{1}
+\setlength{\headerspace}{8pt}
+\rubricfont{\Large\bfseries\sffamily}
+\setlength{\rubricspace}{4pt}
+\setlength{\rubricafterspace}{2pt}
+\setlength{\subrubricspace}{4pt}
+\setlength{\subrubricbeforespace}{5pt}
+\def\@@rubrichead#1{%
+  \begin{tikzpicture}[baseline]%\
+  \fill[SwishLineColour] (0,0) rectangle (\@almosttextwidth,1.5pt);
+  \node[font={\@rubricfont},inner sep=0pt,text ragged,anchor=south west,text depth=.5ex,text height=1.5ex,text=SwishLineColour] at (0pt,3pt) {#1};
+  \end{tikzpicture}%
+  \vspace\rubricspace%
+}
+
+\subrubricfont{\large\bfseries\sffamily}
+\subrubricalignment{l}
+
+\newcommand{\makefield}[2]{\makebox[1.5em]{\color{MarkerColour}#1} #2\hspace{1.5em}}
+
+\keyalignment{r}
+\rubricalignment{l}
+\renewcommand{\arraystretch}{1.25}
+\urlstyle{tt}
+
+% Set key width to 0 to remove indentation from entries
+\setlength{\keywidth}{0pt}
+
+% Remove paragraph indentation globally
+\setlength{\parindent}{0pt}
+
+\newcommand{\prefixmarker}[1]{\def\@prefixmarker{#1}}
+\def\@prefixmarker{}
+
+\prefix{%
+}
+
+\newcommand{\makerubrichead}[1]{\vskip\baselineskip\@@rubrichead{#1}}
+
+% Aliases for clearer naming - cvsection instead of rubric
+\newenvironment{cvsection}[1]{\begin{rubric}{#1}}{\end{rubric}}
+\newcommand{\makecvsection}[1]{\makerubric{#1}}
+\newcommand{\makecvsectionhead}[1]{\makerubrichead{#1}}
+\newcommand{\subcvsection}[1]{\subrubric{#1}}
+
+\defbibheading{subbibliography}{\vskip\subrubricbeforespace{\@subrubricfont\hspace{3pt}#1}\par}
+
+\defbibfilter{booksandchapters}{%
+( type=book or type=incollection )
+}
+
+ 
+
+
+\newcommand{\myname}[2]{%
+   \def\@mylastname{#1}%
+   \def\@myfirstname{#2}%
+}
+
+\renewcommand*{\mkbibnamefamily}[1]{%
+  \ifboolexpr{ test {\ifdefstrequal{\namepartfamily}{\@mylastname}}
+               and
+               test {\ifdefstrequal{\namepartgiven}{\@myfirstname}}}
+    {\textbf{#1}}%
+    {#1}%
+}
+
+\renewcommand*{\mkbibnamegiven}[1]{%
+  \ifboolexpr{ test {\ifdefstrequal{\namepartfamily}{\@mylastname}}
+               and
+               test {\ifdefstrequal{\namepartgiven}{\@myfirstname}}}
+    {\textbf{#1}}%
+    {#1}%
+}
+
+\RequirePackage[colorlinks=true,linkcolor=MarkerColour,urlcolor=MarkerColour,citecolor=MarkerColour,filecolor=MarkerColour,breaklinks=true]{hyperref}
+
+% ==================== CV Entry Template Commands ====================
+% Template commands for consistent formatting across all CV sections
+
+% Employment/Research Experience Entry
+% Usage: \employment{institution}{location}{dates}{role}{description}{achievements}
+% achievements can be empty or contain \item entries
+\newcommand{\employment}[6]{%
+  \entry*[]%
+  \textbf{#1}, #2 \hfill #3
+  \par \textit{#4}
+  \par #5
+  \ifx\relax#6\relax\else\begin{itemize}#6\end{itemize}\fi
+}
+
+% Teaching Experience Entry
+% Usage: \teachingexp{institution}{location}{dates}{role}{description}{achievements}
+\newcommand{\teachingexp}[6]{%
+  \entry*[]%
+  \textbf{#1}, #2 \hfill #3
+  \par \textit{#4}
+  \par #5
+  \ifx\relax#6\relax\else\begin{itemize}#6\end{itemize}\fi
+}
+
+% Industrial Experience Entry
+% Usage: \industrial{company}{location}{role}{dates}{description}
+\newcommand{\industrial}[5]{%
+  \entry*[]%
+  \textbf{#1}, #2 --- \textit{#3} \hfill #4
+  \par #5
+}
+
+% Education Entry
+% Usage: \education{degree}{university}{location}{dates}{additional}
+% additional can be empty
+\newcommand{\education}[5]{%
+  \entry*[]%
+  \textbf{#1}, #2, #3 \hfill #4
+  \ifx\relax#5\relax\else\par #5\fi
+}
+
+% Additional Training Entry
+% Usage: \training{name}{location}{dates}
+\newcommand{\training}[3]{%
+  \entry*[]%
+  \textbf{#1}, #2 \hfill #3
+}
+
+% Certification Entry
+% Usage: \certification{name}{issuer}{dates}
+\newcommand{\certification}[3]{%
+  \entry*[] \textbf{#1}, #2 \hfill #3
+}
+
+% Professional Development Entry
+% Usage: \professionaldev{activity}{location}{dates}
+\newcommand{\professionaldev}[3]{%
+  \entry*[] \textbf{#1}, #2 \hfill #3
+}
+
+% Award/Honor Entry
+% Usage: \award{name}{description}{dates}
+% description can be empty
+\newcommand{\award}[3]{%
+  \entry*[] #1 \hfill #3
+  \ifx\relax#2\relax\else\par #2\fi
+}
+
+% Presentation Entry
+% Usage: \presentation{title}{venue}{location}{dates}
+\newcommand{\presentation}[4]{%
+  \entry*[] Research presentation on \textbf{\textit{#1}} at \textit{#2}, #3. \hfill #4
+}
+
+% Invited Talk/Interview Entry
+% Usage: \invitedtalk{title}{event}{dates}
+\newcommand{\invitedtalk}[3]{%
+  \entry*[] Speaker on \textbf{#1} at \textit{#2}. \hfill #3
+}
+
+% Research Grant Entry
+% Usage: \grant{title}{agency}{role}{status}{dates}
+% status can be empty
+\newcommand{\grant}[5]{%
+  \entry*[] \textbf{#1}
+  \begin{itemize}
+    \item \textbf{Funding agency:} #2
+    \item \textbf{Role:} #3
+    \ifx\relax#4\relax\else\item \textbf{Status:} #4\fi
+    \ifx\relax#5\relax\else\item \textbf{Dates:} #5\fi
+  \end{itemize}
+}
+
+% Research Project Entry
+% Usage: \researchproject{title}{status}
+% status can be empty or "Active" or "Completed"
+\newcommand{\researchproject}[2]{%
+  \entry*[] \textbf{#1}%
+  \ifx\relax#2\relax\else\ (#2)\fi
+}
+
+% Supervision Entry
+% Usage: \supervision{student}{project}{type}{level}{year}{status}
+% type: Research, Thesis, etc.
+% level: Bachelor's, Master's, PhD, etc.
+% status: Completed, In Progress, etc.
+\newcommand{\supervision}[6]{%
+  \item \textbf{#1}%
+  \ifx\relax#2\relax\else, \textit{#2}\fi
+  \ifx\relax#3\relax\else\ | #3\fi
+  \ifx\relax#4\relax\else\ | #4 Level\fi
+  \ifx\relax#5\relax\else\ | \textbf{#5}\fi
+  \ifx\relax#6\relax\else\ | #6\fi
+}
+
+% Entrepreneurship Entry
+% Usage: \entrepreneurship{name}{description}{role}{focus}{website}
+% focus and website can be empty
+\newcommand{\entrepreneurship}[5]{%
+  \entry*[] \textbf{#1}: #2
+  \begin{itemize}
+    \item \textbf{Role}: #3
+    \ifx\relax#4\relax\else\item \textbf{Focus}: #4\fi
+    \ifx\relax#5\relax\else\item \textbf{Website}: \href{#5}{#5}\fi
+  \end{itemize}
+}
+
+% Service Entry (Reviewer, Committee, etc.)
+% Usage: \service{role}{venue}{dates}
+\newcommand{\service}[3]{%
+  \entry*[] \textbf{#1}, \textit{#2} \hfill #3
+}
+
+% Skill Category Entry
+% Usage: \skillcategory{category}{skills}
+% skills should be comma-separated
+\newcommand{\skillcategory}[2]{%
+  \entry*[] \textbf{#1}: #2
+}
+
+% Volunteer Entry
+% Usage: \volunteer{role}{organization}{dates}
+\newcommand{\volunteer}[3]{%
+  \entry*[] #1 at \textbf{#2}. \hfill #3
+}
+
+% Reference Entry
+% Usage: \reference{name}{title}{institution}{email}
+\newcommand{\reference}[4]{%
+  \entry*[] \textbf{#1}, #2, #3, \texttt{#4}
+}
+
+% Open Source Project Entry
+% Usage: \opensource{name}{project}{url}
+% project and url can be empty
+\newcommand{\opensource}[3]{%
+  \entry*[] #1
+  \begin{itemize}
+    \ifx\relax#2\relax\else\item Project: \href{#2}{#2}\fi
+    \ifx\relax#3\relax\else\item URL: \url{#3}\fi
+  \end{itemize}
+}
+
+% Workshop/Event Organization Entry
+% Usage: \workshoporg{eventtype}{daterange}{title}{organization}{host}{registrations}{participants}{year}
+% Most fields can be empty
+\newcommand{\workshoporg}[8]{%
+  \entry*[] Led the organization and execution of a \textbf{#1}%
+  \ifx\relax#2\relax\else\ (#2)\fi
+  \ifx\relax#3\relax\else\ on \textbf{``#3''}\fi
+  \ifx\relax#4\relax\else\ through \textit{#4}\fi
+  \ifx\relax#5\relax\else, hosted by \textit{#5}\fi
+  \ifx\relax#6\relax\else, attracting \textbf{#6+ registrations}\fi
+  \ifx\relax#7\relax\else\ and engaging \textbf{#7+ active participants}\fi
+  . \hfill #8
+}
+
+% Editorial Service Entry
+% Usage: \editorial{role}{venue}{url}{year}
+% url can be empty
+\newcommand{\editorial}[4]{%
+  \entry*[] \textbf{#1}, \textit{#2}%
+  \ifx\relax#3\relax\else. \url{#3}\fi
+  \hfill #4
+}
+
+% Course Entry
+% Usage: \course{code}{name}{institution}{location}{semesters}
+% semesters can be empty
+\newcommand{\course}[5]{%
+  \entry*[] \textbf{#1 #2}, #3, #4%
+  \ifx\relax#5\relax\else\ \hfill #5\fi
+}
+
