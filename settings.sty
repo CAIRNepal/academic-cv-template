@@ -259,10 +259,14 @@
 
 % Education Entry
 % Usage: \education{degree}{university}{location}{dates}{additional}
+% Format: First row - Degree + Date (right-aligned)
+%         Second row - University, Country
+%         Third row - Additional info (optional)
 % additional can be empty
 \newcommand{\education}[5]{%
   \@entry*[]%
-  \textbf{#1}, #2, #3 \hfill #4
+  \textbf{#1} \hfill #4
+  \par #2, #3
   \@cvifempty{#5}{}{\par #5}%
 }
 

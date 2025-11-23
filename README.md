@@ -168,6 +168,9 @@ The template provides standardized commands for consistent formatting across all
 ```latex
 \education{degree}{university}{location}{dates}{additional}
 ```
+- Format: First row - **Degree** + Date (right-aligned)
+- Second row - University, Country
+- Third row - Additional info (optional)
 - `additional` (5th parameter) is optional - use `{}` if no additional info (dissertation, specialization, etc.)
 
 **Examples:**
