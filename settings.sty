@@ -522,6 +522,23 @@
   \@cvifempty{#4}{}{\par #4}%
 }
 
+% Service Role Group - Groups services by role with bulleted venue list
+% Usage: \servicerole{role} ... \servicevenue{venue}{date} ... \endservicerole
+% Format: Role name (indented, not bold)
+%         Bulleted list of venues with dates (indented further, with dots)
+\newcommand{\servicerole}[1]{%
+  \@entry*[]%
+  \hspace{1em}#1%
+}
+
+% Service Venue Entry - Adds a venue to the current role group
+% Usage: \servicevenue{venue}{date}
+% Format: Bullet point with venue name and date (right-aligned)
+\newcommand{\servicevenue}[2]{%
+  \@entry*[]%
+  \hspace{2em}\textbullet\ #1 \hfill #2
+}
+
 % Skill Category Entry
 % Usage: \skillcategory{category}{skills}
 % skills should be comma-separated
@@ -625,7 +642,7 @@
 }{%
   % Try to load datetime2, but fall back to \today if not available
   \IfFileExists{datetime2.sty}{%
-    \RequirePackage[us,calc]{datetime2}%
+    \RequirePackage[us]{datetime2}%
     \DTMlangsetup[en-US]{ordinal=raise}%
     \newcommand{\lastupdateddate}{\DTMtoday}%
   }{%

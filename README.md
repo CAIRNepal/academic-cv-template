@@ -355,6 +355,8 @@ The template provides standardized commands for consistent formatting across all
 ```
 
 ### Professional Services
+
+#### Individual Service Entry
 ```latex
 \service{role}{venue}{dates}{additional}
 ```
@@ -367,6 +369,31 @@ The template provides standardized commands for consistent formatting across all
 ```latex
 \service{Reviewer}{Journal Name}{2023}{}
 \service{Program Committee Member}{Conference Name}{2024}{Additional details.}
+```
+
+#### Grouped Services by Role
+For grouping multiple venues under the same role (e.g., multiple journal reviews):
+```latex
+\servicerole{role}
+\servicevenue{venue}{date}
+\servicevenue{venue}{date}
+...
+```
+- `\servicerole{role}` - Starts a role group, displays role name (indented)
+- `\servicevenue{venue}{date}` - Adds a venue entry with bullet, dots, and date (right-aligned)
+- Format: Role name on first line, then bulleted list of venues with dates
+
+**Example:**
+```latex
+\subcvsection{Journal Reviews}
+\servicerole{Reviewer}
+\servicevenue{eBioMedicine}{2025}
+\servicevenue{Computer Communications}{2024}
+\servicevenue{Semantic Web}{2024}
+
+\servicerole{Program Committee Member}
+\servicevenue{ISWC}{2025}
+\servicevenue{KGSWC}{2023}
 ```
 
 ### Editorial Services
