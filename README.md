@@ -435,14 +435,19 @@ The template provides standardized commands for consistent formatting across all
 
 ### Courses Taught
 ```latex
-\course{code}{name}{institution}{location}{semesters}
+\course{code}{name}{semesters}{additional}
 ```
-- `semesters` (5th parameter) is optional - use `{}` if no semester information available
+- Format: First row - **Course Code Course Name** + Semesters (right-aligned, if provided)
+- Second row - Additional info (optional)
+- `semesters` (3rd parameter) is optional - use `{}` if no semester information available
+- `additional` (4th parameter) is optional - use `{}` if no additional info
+- **Note:** Institution and location should be specified in `\subcvsection{}` to avoid repetition
 
 **Examples:**
 ```latex
-\course{CS101}{Introduction to Programming}{University Name}{Location}{Fall 2023, Spring 2024}
-\course{CS201}{Data Structures}{University Name}{Location}{}
+\subcvsection{University Name, Location}
+\course{CS101}{Introduction to Programming}{Fall 2023, Spring 2024}{}
+\course{CS201}{Data Structures}{}{Additional details (optional).}
 ```
 
 ## Author Name Bolding

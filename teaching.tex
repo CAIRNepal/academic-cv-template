@@ -10,26 +10,28 @@
 
 \subcvsection{Institution Name, Location}
 
-% \course{code}{name}{institution}{location}{semesters}
-% If no semester information available, use {} for last parameter (semesters)
-\course{Course Code}{Course Name}{Institution Name}{Location}{Semester YYYY, Semester YYYY}
+% \course{code}{name}{semesters}{additional}
+% Institution and location are specified in \subcvsection{} above
+% If no semester information available, use {} for third parameter (semesters)
+% If no additional info, use {} for last parameter
+\course{Course Code}{Course Name}{Semester YYYY, Semester YYYY}{}
 
-\course{Course Code}{Course Name}{Institution Name}{Location}{Semester YYYY, Semester YYYY}
-
-\subcvsection{Institution Name, Location}
-
-\course{Course Code}{Course Name (Type)}{Institution Name}{Location}{Semester YYYY}
+\course{Course Code}{Course Name}{Semester YYYY, Semester YYYY}{}
 
 \subcvsection{Institution Name, Location}
 
-\course{Course Code}{Course Name}{Institution Name}{Location}{}
-
-\course{Course Code}{Course Name}{Institution Name}{Location}{}
-
-\course{Course Code}{Course Name}{Institution Name}{Location}{}
+\course{Course Code}{Course Name (Type)}{Semester YYYY}{}
 
 \subcvsection{Institution Name, Location}
 
-\course{Course Code}{Course Name}{Institution Name}{Location}{}
+\course{Course Code}{Course Name}{}{}
+
+\course{Course Code}{Course Name}{}{}
+
+\course{Course Code}{Course Name}{}{Additional details (optional).}
+
+\subcvsection{Institution Name, Location}
+
+\course{Course Code}{Course Name}{}{}
 
 \end{cvsection}

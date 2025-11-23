@@ -516,11 +516,16 @@
 }
 
 % Course Entry
-% Usage: \course{code}{name}{institution}{location}{semesters}
-% semesters can be empty
-\newcommand{\course}[5]{%
-  \@entry*[] \textbf{#1 #2}, #3, #4%
-  \@cvifempty{#5}{}{\ \hfill #5}%
+% Usage: \course{code}{name}{semesters}{additional}
+% Format: First row - **Course Code Course Name** + Semesters (right-aligned, if provided)
+%         Second row - Additional info (optional)
+% semesters and additional can be empty
+% Note: Institution and location should be specified in \subcvsection{} to avoid repetition
+\newcommand{\course}[4]{%
+  \@entry*[]%
+  \textbf{#1 #2}%
+  \@cvifempty{#3}{}{\ \hfill #3}%
+  \@cvifempty{#4}{}{\par #4}%
 }
 
 % Last Updated Date
