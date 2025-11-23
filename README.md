@@ -161,7 +161,21 @@ The template provides standardized commands for consistent formatting across all
 
 ### Industrial Experience
 ```latex
-\industrial{company}{location}{role}{dates}{description}
+\industrial{company}{location}{dates}{role}{description}{achievements}
+```
+- Format: First row - **Company**, Location + Date (right-aligned)
+- Second row - Position Title (italics)
+- Third row - Description
+- Fourth - Achievements (optional, use \item entries)
+- `achievements` (6th parameter) should contain `\item` entries - use `{}` if no achievements to list
+
+**Examples:**
+```latex
+\industrial{Company Name}{Location}{2020--2023}{Software Engineer}{Developed applications.}{%
+\item Led team of 5 developers
+\item Improved performance by 40%
+}
+\industrial{Company Name}{Location}{2023--Present}{Senior Developer}{Brief description.}{}
 ```
 
 ### Education
@@ -196,14 +210,19 @@ The template provides standardized commands for consistent formatting across all
 
 ### Awards and Honors
 ```latex
-\award{name}{description}{dates}
+\award{name}{organization}{dates}{description}
 ```
-- `description` (2nd parameter) is optional - use `{}` if no additional description needed
+- Format: First row - **Award Name** + Date (right-aligned)
+- Second row - Organization/Location (optional)
+- Third row - Description/Additional info (optional)
+- `organization` (2nd parameter) is optional - use `{}` if no organization
+- `description` (4th parameter) is optional - use `{}` if no additional description
 
 **Examples:**
 ```latex
-\award{\textbf{Best Paper Award}, Conference Name}{}{2023}
-\award{\textbf{Scholarship Name}}{Awarded for outstanding academic performance.}{2022}
+\award{Best Paper Award}{Conference Name}{2023}{}
+\award{Scholarship Name}{Organization Name}{2022}{Awarded for outstanding academic performance.}
+\award{Award Name}{Organization Name, Location}{2024}{Additional details about the award.}
 ```
 
 ### Presentations
@@ -265,16 +284,19 @@ The template provides standardized commands for consistent formatting across all
 ```latex
 \supervision{student}{project}{type}{level}{year}{status}
 ```
+- Format: First row - **Student Name** + Year (right-aligned)
+- Second row - Project/Thesis Title
+- Third row - Type | Level | Status (only shows non-empty fields)
+- `type` (3rd parameter) is optional - use `{}` if not needed
 - `level` (4th parameter) is optional - use `{}` if not specifying degree level
 - `status` (6th parameter) is optional - use `{}` if not needed
-- All arguments are required - use placeholder text if a field is not applicable
-- **Note:** Do NOT use within `\begin{itemize}...\end{itemize}` - the command handles formatting automatically
 
 **Examples:**
 ```latex
 \supervision{John Doe}{Machine Learning Project}{Research}{Master's}{2023}{Completed}
-\supervision{Jane Smith}{Project Title}{Research}{}{2024}{}
+\supervision{Jane Smith}{Project Title}{Research}{}{2024}{In Progress}
 \supervision{Student Name}{Thesis Title}{Thesis}{Bachelor's}{2023}{Completed}
+\supervision{Student Name}{Research Project}{}{PhD}{2024}{}
 ```
 
 ### Entrepreneurship
@@ -292,19 +314,33 @@ The template provides standardized commands for consistent formatting across all
 
 ### Certifications
 ```latex
-\certification{name}{issuer}{dates}
+\certification{name}{issuer}{dates}{additional}
+```
+- Format: First row - **Certification Name** + Date (right-aligned)
+- Second row - Issuing Organization/Platform
+- Third row - Additional info (optional)
+- `additional` (4th parameter) is optional - use `{}` if no additional info
+
+**Examples:**
+```latex
+\certification{Certification Name}{Issuing Organization}{2023}{}
+\certification{Certification Name}{Platform}{2024}{Additional details or credential ID.}
 ```
 
 ### Professional Development
 ```latex
-\professionaldev{activity}{location}{dates}
+\professionaldev{activity}{location}{dates}{additional}
 ```
+- Format: First row - **Activity Name** + Date (right-aligned)
+- Second row - Location/Institution
+- Third row - Additional info (optional)
 - `location` (2nd parameter) is optional - use `{}` if no location available
+- `additional` (4th parameter) is optional - use `{}` if no additional info
 
 **Examples:**
 ```latex
-\professionaldev{Training Name}{Institution Name}{2023}
-\professionaldev{Online Course}{}{2022}
+\professionaldev{Training Name}{Institution Name}{2023}{}
+\professionaldev{Online Course}{}{2022}{Additional details or completion certificate.}
 ```
 
 ### Skills

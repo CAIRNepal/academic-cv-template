@@ -250,11 +250,18 @@
 }
 
 % Industrial Experience Entry
-% Usage: \industrial{company}{location}{role}{dates}{description}
-\newcommand{\industrial}[5]{%
+% Usage: \industrial{company}{location}{dates}{role}{description}{achievements}
+% Format: First row - **Company**, Location + Date (right-aligned)
+%         Second row - Position Title (italics)
+%         Third row - Description
+%         Fourth - Achievements (optional, use \item entries)
+% achievements can be empty or contain \item entries
+\newcommand{\industrial}[6]{%
   \@entry*[]%
-  \textbf{#1}, #2 --- \textit{#3} \hfill #4
+  \textbf{#1}, #2 \hfill #3
+  \par \textit{#4}
   \par #5
+  \@cvifempty{#6}{}{\begin{itemize}#6\end{itemize}}%
 }
 
 % Education Entry
@@ -284,23 +291,42 @@
 }
 
 % Certification Entry
-% Usage: \certification{name}{issuer}{dates}
-\newcommand{\certification}[3]{%
-  \@entry*[] \textbf{#1}, #2 \hfill #3
+% Usage: \certification{name}{issuer}{dates}{additional}
+% Format: First row - **Certification Name** + Date (right-aligned)
+%         Second row - Issuing Organization/Platform
+%         Third row - Additional info (optional)
+% additional can be empty
+\newcommand{\certification}[4]{%
+  \@entry*[]%
+  \textbf{#1} \hfill #3
+  \par #2
+  \@cvifempty{#4}{}{\par #4}%
 }
 
 % Professional Development Entry
-% Usage: \professionaldev{activity}{location}{dates}
-\newcommand{\professionaldev}[3]{%
-  \@entry*[] \textbf{#1}, #2 \hfill #3
+% Usage: \professionaldev{activity}{location}{dates}{additional}
+% Format: First row - **Activity Name** + Date (right-aligned)
+%         Second row - Location/Institution
+%         Third row - Additional info (optional)
+% location and additional can be empty
+\newcommand{\professionaldev}[4]{%
+  \@entry*[]%
+  \textbf{#1} \hfill #3
+  \@cvifempty{#2}{}{\par #2}%
+  \@cvifempty{#4}{}{\par #4}%
 }
 
 % Award/Honor Entry
-% Usage: \award{name}{description}{dates}
-% description can be empty
-\newcommand{\award}[3]{%
-  \@entry*[] #1 \hfill #3
+% Usage: \award{name}{organization}{dates}{description}
+% Format: First row - **Award Name** + Date (right-aligned)
+%         Second row - Organization/Location (optional)
+%         Third row - Description/Additional info (optional)
+% organization and description can be empty
+\newcommand{\award}[4]{%
+  \@entry*[]%
+  \textbf{#1} \hfill #3
   \@cvifempty{#2}{}{\par #2}%
+  \@cvifempty{#4}{}{\par #4}%
 }
 
 % Presentation Entry
@@ -352,13 +378,35 @@
 
 % Supervision Entry
 % Usage: \supervision{student}{project}{type}{level}{year}{status}
-% type: Research, Thesis, etc.
-% level: Bachelor's, Master's, PhD, etc.
-% status: Completed, In Progress, etc.
-% Use \@entry*[] like other commands to avoid tabular alignment conflicts
-% All arguments are required - use placeholder text if a field is not applicable
+% Format: First row - **Student Name** + Year (right-aligned)
+%         Second row - Project/Thesis Title
+%         Third row - Type | Level | Status (only shows non-empty fields)
+% type: Research, Thesis, etc. (can be empty {})
+% level: Bachelor's, Master's, PhD, etc. (can be empty {})
+% status: Completed, In Progress, etc. (can be empty {})
 \newcommand{\supervision}[6]{%
-  \@entry*[] \textbf{#1}, \textit{#2} | #3 | #4 Level | \textbf{#5} | #6
+  \@entry*[]%
+  \textbf{#1} \hfill #5
+  \par \textit{#2}%
+  \@cvifempty{#3}{}{%
+    \@cvifempty{#4}{}{%
+      \@cvifempty{#6}{}{\par #3 | #4 Level | #6}%
+      \@cvifempty{#6}{}{\par #3 | #4 Level}%
+    }%
+    \@cvifempty{#4}{}{%
+      \@cvifempty{#6}{}{\par #3 | #6}%
+      \@cvifempty{#6}{}{\par #3}%
+    }%
+  }%
+  \@cvifempty{#3}{}{%
+    \@cvifempty{#4}{}{%
+      \@cvifempty{#6}{}{\par #4 Level | #6}%
+      \@cvifempty{#6}{}{\par #4 Level}%
+    }%
+    \@cvifempty{#4}{}{%
+      \@cvifempty{#6}{}{\par #6}%
+    }%
+  }%
 }
 
 % Entrepreneurship Entry
