@@ -384,29 +384,106 @@
 % type: Research, Thesis, etc. (can be empty {})
 % level: Bachelor's, Master's, PhD, etc. (can be empty {})
 % status: Completed, In Progress, etc. (can be empty {})
-\newcommand{\supervision}[6]{%
+% \newcommand{\supervision}[6]{%
+%   \@entry*[]%
+%   \textbf{#1} \hfill #5
+%   \par \textit{#2}%
+%   \@cvifempty{#3}{}{%
+%     \@cvifempty{#4}{}{%
+%       \@cvifempty{#6}{}{\par #3 | #4 Level | #6}%
+%       \@cvifempty{#6}{}{\par #3 | #4 Level}%
+%     }%
+%     \@cvifempty{#4}{}{%
+%       \@cvifempty{#6}{}{\par #3 | #6}%
+%       \@cvifempty{#6}{}{\par #3}%
+%     }%
+%   }%
+%   \@cvifempty{#3}{}{%
+%     \@cvifempty{#4}{}{%
+%       \@cvifempty{#6}{}{\par #4 Level | #6}%
+%       \@cvifempty{#6}{}{\par #4 Level}%
+%     }%
+%     \@cvifempty{#4}{}{%
+%       \@cvifempty{#6}{}{\par #6}%
+%     }%
+%   }%
+% }
+% Supervision Entry
+% Usage: \supervision{student}{project}{type}{level}{year}{status}
+% Format: First row  - Student Name .......... Year (right-aligned)
+%         Second row - Project/Thesis Title (italic)
+%         Third row  - Type | Level Level | Status  (only non-empty parts)
+
+% \newcommand{\supervision}[6]{%
+%   \@entry*[]%
+%   \textbf{#1} \hfill #5%
+%   \par \textit{#2}%
+%   %
+%   % Build the "Type | Level Level | Status" line
+%   \begingroup
+%     \def\superline{}%
+%     % Type
+%     \@cvifempty{#3}{}{\edef\superline{#3}}%
+%     % Level
+%     \@cvifempty{#4}{}{%
+%       \ifx\superline\@cv@empty
+%         \edef\superline{#4\space Level}%
+%       \else
+%         \edef\superline{\superline\space|\space #4\space Level}%
+%       \fi
+%     }%
+%     % Status
+%     \@cvifempty{#6}{}{%
+%       \ifx\superline\@cv@empty
+%         \edef\superline{#6}%
+%       \else
+%         \edef\superline{\superline\space|\space #6}%
+%       \fi
+%     }%
+%     % Print line only if something is non-empty
+%     \@cvifempty{\superline}{}{\par \superline}%
+%   \endgroup
+% }
+
+
+% Supervision Entry
+% Usage: \supervision{student}{project}{type}{level}{year}{status}{institute}
+% Format:
+%   Student Name .................... Year
+%   Project Title (italic)
+%   Institute / University  (optional)
+%   Type | Level Level | Status  (auto-skips empty)
+
+\newcommand{\supervision}[7]{%
   \@entry*[]%
-  \textbf{#1} \hfill #5
+  \textbf{#1} \hfill #5%
   \par \textit{#2}%
-  \@cvifempty{#3}{}{%
+  \@cvifempty{#7}{}{\par #7}%
+  %
+  % Build the third line dynamically
+  \begingroup
+    \def\line{}%
+    % type
+    \@cvifempty{#3}{}{\edef\line{#3}}%
+    % level
     \@cvifempty{#4}{}{%
-      \@cvifempty{#6}{}{\par #3 | #4 Level | #6}%
-      \@cvifempty{#6}{}{\par #3 | #4 Level}%
+      \ifx\line\@cv@empty
+        \edef\line{#4\space Level}%
+      \else
+        \edef\line{\line\space|\space #4\space Level}%
+      \fi
     }%
-    \@cvifempty{#4}{}{%
-      \@cvifempty{#6}{}{\par #3 | #6}%
-      \@cvifempty{#6}{}{\par #3}%
+    % status
+    \@cvifempty{#6}{}{%
+      \ifx\line\@cv@empty
+        \edef\line{#6}%
+      \else
+        \edef\line{\line\space|\space #6}%
+      \fi
     }%
-  }%
-  \@cvifempty{#3}{}{%
-    \@cvifempty{#4}{}{%
-      \@cvifempty{#6}{}{\par #4 Level | #6}%
-      \@cvifempty{#6}{}{\par #4 Level}%
-    }%
-    \@cvifempty{#4}{}{%
-      \@cvifempty{#6}{}{\par #6}%
-    }%
-  }%
+    % print only if non-empty
+    \@cvifempty{\line}{}{\par \line}%
+  \endgroup
 }
 
 % Entrepreneurship Entry
