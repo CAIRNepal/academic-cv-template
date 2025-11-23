@@ -30,7 +30,8 @@
 
 \newcommand{\smallcaps}[1]{\textsc{\lowercase{#1}}}
 
-\RequirePackage[a4paper,nohead,nofoot,hmargin=2cm,vmargin=1.8cm]{geometry}
+\RequirePackage[a4paper,nohead,hmargin=2cm,vmargin=1.8cm]{geometry}
+\RequirePackage{fancyhdr}
 \RequirePackage{relsize}
 \RequirePackage[dvipsnames,svgnames]{xcolor}
 \RequirePackage{tikz}
@@ -163,12 +164,16 @@
 
  
 
-
+% Command to set the CV author's name for automatic bolding in publications
+% Usage: \myname{LastName}{First\bibnamedelima Name}
+% Use \bibnamedelima for spaces in the first name (e.g., "First\bibnamedelima Middle\bibnamedelima Name")
 \newcommand{\myname}[2]{%
    \def\@mylastname{#1}%
    \def\@myfirstname{#2}%
 }
 
+% Automatically bold the author's name in bibliography entries
+% This redefines how family names are formatted in citations
 \renewcommand*{\mkbibnamefamily}[1]{%
   \ifboolexpr{ test {\ifdefstrequal{\namepartfamily}{\@mylastname}}
                and
@@ -177,6 +182,8 @@
     {#1}%
 }
 
+% Automatically bold the author's name in bibliography entries
+% This redefines how given names are formatted in citations
 \renewcommand*{\mkbibnamegiven}[1]{%
   \ifboolexpr{ test {\ifdefstrequal{\namepartfamily}{\@mylastname}}
                and
@@ -407,5 +414,34 @@
 \newcommand{\course}[5]{%
   \@entry*[] \textbf{#1 #2}, #3, #4%
   \@cvifempty{#5}{}{\ \hfill #5}%
+}
+
+% Last Updated Date
+% Automatically displays the compilation date in the footer
+% Optionally uses datetime2 package for better date formatting
+\@ifpackageloaded{datetime2}{%
+  \DTMlangsetup[en-US]{ordinal=raise}%
+  \newcommand{\lastupdateddate}{\DTMtoday}%
+}{%
+  % Try to load datetime2, but fall back to \today if not available
+  \IfFileExists{datetime2.sty}{%
+    \RequirePackage[us,calc]{datetime2}%
+    \DTMlangsetup[en-US]{ordinal=raise}%
+    \newcommand{\lastupdateddate}{\DTMtoday}%
+  }{%
+    \newcommand{\lastupdateddate}{\today}%
+  }%
+}
+
+% Set up footer with last updated date (automatic - no command needed)
+% This will automatically appear on every page
+\AtBeginDocument{%
+  \pagestyle{fancy}%
+  \fancyhf{} % Clear all headers and footers
+  \renewcommand{\headrulewidth}{0pt} % Remove header rule
+  \renewcommand{\footrulewidth}{0pt} % Remove footer rule
+  \fancyfoot[C]{%
+    \small\textcolor{MarkerColour!70!black}{Last Updated: \lastupdateddate}%
+  }%
 }
 

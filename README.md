@@ -83,6 +83,7 @@ This template provides a comprehensive structure for creating academic CVs with 
 3. **Update your name** in `main-cv.tex`:
    - Change `\myname{LastName}{First\bibnamedelima Name}` to match your name as it appears in your publications
    - Update the header with your contact information (name, email, website, etc.)
+   - **Important**: The `\myname` command automatically bolds your name in all publication entries. See the "Author Name Bolding" section below for details.
 
 4. **Add your publications** to `publication.bib` in BibTeX format. The template supports:
    - Journal articles
@@ -353,6 +354,62 @@ The template provides standardized commands for consistent formatting across all
 \course{CS201}{Data Structures}{University Name}{Location}{}
 ```
 
+## Author Name Bolding
+
+The template automatically bolds your name in all publication entries. This feature is implemented using biblatex's name formatting hooks.
+
+### How to Use
+
+1. **Set your name** in `main-cv.tex` using the `\myname` command:
+   ```latex
+   \myname{LastName}{First\bibnamedelima Name}
+   ```
+
+2. **Name Format Guidelines**:
+   - **Last Name**: Your family name (e.g., `Smith`, `Chhetri`)
+   - **First Name**: Your given name(s)
+   - **Spaces in First Name**: Use `\bibnamedelima` for spaces (e.g., `First\bibnamedelima Middle\bibnamedelima Name`)
+   - **Multiple First Names**: Separate with `\bibnamedelima` (e.g., `John\bibnamedelima Michael`)
+
+3. **Examples**:
+   ```latex
+   % Simple name
+   \myname{Smith}{John}
+   
+   % Name with middle name
+   \myname{Chhetri}{Tek\bibnamedelima Raj}
+   
+   % Name with multiple given names
+   \myname{Johnson}{Mary\bibnamedelima Elizabeth\bibnamedelima Anne}
+   ```
+
+4. **Important Notes**:
+   - The name must **exactly match** how it appears in your `publication.bib` file
+   - Matching is **case-sensitive** - ensure capitalization matches
+   - The name format in your `.bib` file should use standard BibTeX name format: `Last, First` or `First Last`
+   - Your name will be automatically bolded in all publication types (articles, proceedings, books, etc.)
+
+5. **Troubleshooting**:
+   - If your name is not being bolded, check that:
+     - The name in `\myname` exactly matches the name in `publication.bib`
+     - The capitalization is correct
+     - You've compiled the document with Biber (run `biber main-cv` after the first `pdflatex` run)
+     - The bibliography has been properly processed
+
+## Automatic Features
+
+### Last Updated Date
+
+The template **automatically** displays a "Last Updated" date in the footer of your CV, showing when the document was last compiled. **No commands are needed** - it appears automatically on every page.
+
+- **Location**: Appears in the footer, centered at the bottom of each page
+- **Format**: "Last Updated: [Date]" in a subtle color
+- **Automatic**: The date updates automatically each time you compile the document - no manual intervention required
+- **Customization**: 
+  - To remove it, comment out or modify the `\fancyfoot[C]` section in `settings.sty` (around line 441)
+  - To customize the format or position, modify the footer setup in `settings.sty`
+  - The template optionally uses the `datetime2` package for better date formatting if available
+
 ## Customization
 
 - **Colors**: Modify color scheme in `settings.sty` (lines 41-43)
@@ -363,6 +420,7 @@ The template provides standardized commands for consistent formatting across all
 - **Sections**: Comment/uncomment sections in `main-cv.tex` as needed
 - **Photo**: Uncomment photo lines in `main-cv.tex` (lines 73-74) if you want to include a photo
 - **Layout**: Adjust margins in `main-cv.tex` (line 43) if needed
+- **Last Updated Date**: Comment out `\lastupdated` in `main-cv.tex` if you don't want the date displayed
 
 ## File Structure
 
