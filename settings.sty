@@ -271,10 +271,16 @@
 }
 
 % Additional Training Entry
-% Usage: \training{name}{location}{dates}
-\newcommand{\training}[3]{%
+% Usage: \training{name}{location}{dates}{additional}
+% Format: First row - **Training Name** + Date (right-aligned)
+%         Second row - Location
+%         Third row - Additional info (optional)
+% additional can be empty
+\newcommand{\training}[4]{%
   \@entry*[]%
-  \textbf{#1}, #2 \hfill #3
+  \textbf{#1} \hfill #3
+  \par #2
+  \@cvifempty{#4}{}{\par #4}%
 }
 
 % Certification Entry
@@ -298,15 +304,29 @@
 }
 
 % Presentation Entry
-% Usage: \presentation{title}{venue}{location}{dates}
-\newcommand{\presentation}[4]{%
-  \@entry*[] Research presentation on \textbf{\textit{#1}} at \textit{#2}, #3. \hfill #4
+% Usage: \presentation{title}{venue}{location}{dates}{additional}
+% Format: First row - **Title** + Date (right-aligned)
+%         Second row - Venue, Location
+%         Third row - Additional info (optional)
+% additional can be empty
+\newcommand{\presentation}[5]{%
+  \@entry*[]%
+  \textbf{#1} \hfill #4
+  \par \textit{#2}, #3
+  \@cvifempty{#5}{}{\par #5}%
 }
 
 % Invited Talk/Interview Entry
-% Usage: \invitedtalk{title}{event}{dates}
-\newcommand{\invitedtalk}[3]{%
-  \@entry*[] Speaker on \textbf{#1} at \textit{#2}. \hfill #3
+% Usage: \invitedtalk{title}{event}{dates}{additional}
+% Format: First row - **Title** + Date (right-aligned)
+%         Second row - Event Name
+%         Third row - Additional info (optional)
+% additional can be empty
+\newcommand{\invitedtalk}[4]{%
+  \@entry*[]%
+  \textbf{#1} \hfill #3
+  \par \textit{#2}
+  \@cvifempty{#4}{}{\par #4}%
 }
 
 % Research Grant Entry
@@ -354,9 +374,16 @@
 }
 
 % Service Entry (Reviewer, Committee, etc.)
-% Usage: \service{role}{venue}{dates}
-\newcommand{\service}[3]{%
-  \@entry*[] \textbf{#1}, \textit{#2} \hfill #3
+% Usage: \service{role}{venue}{dates}{additional}
+% Format: First row - **Role** + Date (right-aligned)
+%         Second row - Venue/Journal/Conference Name
+%         Third row - Additional info (optional)
+% additional can be empty
+\newcommand{\service}[4]{%
+  \@entry*[]%
+  \textbf{#1} \hfill #3
+  \par \textit{#2}
+  \@cvifempty{#4}{}{\par #4}%
 }
 
 % Skill Category Entry
@@ -367,9 +394,16 @@
 }
 
 % Volunteer Entry
-% Usage: \volunteer{role}{organization}{dates}
-\newcommand{\volunteer}[3]{%
-  \@entry*[] #1 at \textbf{#2}. \hfill #3
+% Usage: \volunteer{role}{organization}{dates}{additional}
+% Format: First row - **Role** + Date (right-aligned)
+%         Second row - Organization Name
+%         Third row - Additional info (optional)
+% additional can be empty
+\newcommand{\volunteer}[4]{%
+  \@entry*[]%
+  \textbf{#1} \hfill #3
+  \par #2
+  \@cvifempty{#4}{}{\par #4}%
 }
 
 % Reference Entry
@@ -390,26 +424,47 @@
 }
 
 % Workshop/Event Organization Entry
-% Usage: \workshoporg{eventtype}{daterange}{title}{organization}{host}{registrations}{participants}{year}
-% Most fields can be empty
+% Usage: \workshoporg{title}{location}{dates}{organization}{host}{registrations}{participants}{additional}
+% Format: First row - **Title** + Date (right-aligned)
+%         Second row - Location/Venue
+%         Third row - Organization, Host, Registrations, Participants, and additional info
+% Most fields can be empty - use {} for optional fields
 \newcommand{\workshoporg}[8]{%
-  \@entry*[] Led the organization and execution of a \textbf{#1}%
-  \@cvifempty{#2}{}{ (#2)}%
-  \@cvifempty{#3}{}{ on \textbf{``#3''}}%
-  \@cvifempty{#4}{}{ through \textit{#4}}%
-  \@cvifempty{#5}{}{, hosted by \textit{#5}}%
-  \@cvifempty{#6}{}{, attracting \textbf{#6+ registrations}}%
-  \@cvifempty{#7}{}{ and engaging \textbf{#7+ active participants}}%
-  . \hfill #8
+  \@entry*[]%
+  \textbf{#1} \hfill #3
+  \par #2
+  \@cvifempty{#4}{}{%
+    \@cvifempty{#5}{}{%
+      \@cvifempty{#6}{}{%
+        \@cvifempty{#7}{}{%
+          \par Organized through \textit{#4}%
+          \@cvifempty{#5}{}{, hosted by \textit{#5}}%
+          \@cvifempty{#6}{}{, attracting \textbf{#6+ registrations}}%
+          \@cvifempty{#7}{}{ and engaging \textbf{#7+ active participants}}%
+        }%
+      }%
+    }%
+  }%
+  \@cvifempty{#8}{}{\par #8}%
 }
 
 % Editorial Service Entry
-% Usage: \editorial{role}{venue}{url}{year}
-% url can be empty
-\newcommand{\editorial}[4]{%
-  \@entry*[] \textbf{#1}, \textit{#2}%
-  \@cvifempty{#3}{}{. \url{#3}}%
-  \hfill #4
+% Usage: \editorial{role}{venue}{url}{year}{additional}
+% Format: First row - **Role** + Date (right-aligned)
+%         Second row - Venue/Journal/Conference Name
+%         Third row - URL (if provided) and additional info (optional)
+% url and additional can be empty
+\newcommand{\editorial}[5]{%
+  \@entry*[]%
+  \textbf{#1} \hfill #4
+  \par \textit{#2}%
+  \@cvifempty{#3}{}{%
+    \@cvifempty{#5}{}{\par \url{#3}}%
+    \@cvifempty{#5}{}{\par \url{#3}. #5}%
+  }%
+  \@cvifempty{#3}{}{%
+    \@cvifempty{#5}{}{\par #5}%
+  }%
 }
 
 % Course Entry

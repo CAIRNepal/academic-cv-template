@@ -181,7 +181,17 @@ The template provides standardized commands for consistent formatting across all
 
 ### Additional Training
 ```latex
-\training{name}{location}{dates}
+\training{name}{location}{dates}{additional}
+```
+- Format: First row - **Training Name** + Date (right-aligned)
+- Second row - Location
+- Third row - Additional info (optional)
+- `additional` (4th parameter) is optional - use `{}` if no additional info
+
+**Examples:**
+```latex
+\training{Summer School: Machine Learning}{Location}{2023}{}
+\training{Course Name, 3 Credits}{Institution Name, Location}{2022}{Additional details or credits information.}
 ```
 
 ### Awards and Honors
@@ -198,12 +208,32 @@ The template provides standardized commands for consistent formatting across all
 
 ### Presentations
 ```latex
-\presentation{title}{venue}{location}{dates}
+\presentation{title}{venue}{location}{dates}{additional}
+```
+- Format: First row - **Title** + Date (right-aligned)
+- Second row - Venue, Location
+- Third row - Additional info (optional)
+- `additional` (5th parameter) is optional - use `{}` if no additional info
+
+**Examples:**
+```latex
+\presentation{Presentation Title}{Conference Name}{Location}{2023}{}
+\presentation{Research Talk}{Workshop Name}{Location (online)}{2024}{Additional details.}
 ```
 
 ### Invited Talks
 ```latex
-\invitedtalk{title}{event}{dates}
+\invitedtalk{title}{event}{dates}{additional}
+```
+- Format: First row - **Title** + Date (right-aligned)
+- Second row - Event Name
+- Third row - Additional info (optional)
+- `additional` (4th parameter) is optional - use `{}` if no additional info
+
+**Examples:**
+```latex
+\invitedtalk{Talk Title}{Event Name}{2023}{}
+\invitedtalk{Panel Discussion}{Conference Name}{2024}{Additional details.}
 ```
 
 ### Research Grants
@@ -290,41 +320,63 @@ The template provides standardized commands for consistent formatting across all
 
 ### Professional Services
 ```latex
-\service{role}{venue}{dates}
+\service{role}{venue}{dates}{additional}
 ```
+- Format: First row - **Role** + Date (right-aligned)
+- Second row - Venue/Journal/Conference Name
+- Third row - Additional info (optional)
+- `additional` (4th parameter) is optional - use `{}` if no additional info
 
-**Example:**
+**Examples:**
 ```latex
-\service{Reviewer}{Journal Name}{2023}
+\service{Reviewer}{Journal Name}{2023}{}
+\service{Program Committee Member}{Conference Name}{2024}{Additional details.}
 ```
 
 ### Editorial Services
 ```latex
-\editorial{role}{venue}{url}{year}
+\editorial{role}{venue}{url}{year}{additional}
 ```
+- Format: First row - **Role** + Date (right-aligned)
+- Second row - Venue/Journal/Conference Name
+- Third row - URL (if provided) and additional info (optional)
 - `url` (3rd parameter) is optional - use `{}` if no URL available
+- `additional` (5th parameter) is optional - use `{}` if no additional info
 
 **Examples:**
 ```latex
-\editorial{General Chair}{Conference Name (Year)}{https://example.com}{2024}
-\editorial{Guest Editor}{Journal Name}{}{2023}
+\editorial{General Chair}{Conference Name (Year)}{https://example.com}{2024}{}
+\editorial{Guest Editor}{Journal Name}{}{2023}{Additional details.}
 ```
 
 ### Workshop Organization
 ```latex
-\workshoporg{eventtype}{daterange}{title}{organization}{host}{registrations}{participants}{year}
+\workshoporg{title}{location}{dates}{organization}{host}{registrations}{participants}{additional}
 ```
+- Format: First row - **Title** + Date (right-aligned)
+- Second row - Location/Venue
+- Third row - Organization, Host, Registrations, Participants, and additional info
 - Most parameters are optional - use `{}` for any field that is not applicable
-- Only `eventtype` (1st) and `year` (8th) are typically required
+- `title` (1st), `location` (2nd), and `dates` (3rd) are typically required
 
 **Example:**
 ```latex
-\workshoporg{Workshop}{Feb 1--2}{Workshop Title}{Organization}{Host Org}{210}{70}{2024}
+\workshoporg{Workshop Title}{Location}{2024}{Organization}{Host Org}{210}{70}{Additional details.}
 ```
 
 ### Community Service/Volunteer
 ```latex
-\volunteer{role}{organization}{dates}
+\volunteer{role}{organization}{dates}{additional}
+```
+- Format: First row - **Role** + Date (right-aligned)
+- Second row - Organization Name
+- Third row - Additional info (optional)
+- `additional` (4th parameter) is optional - use `{}` if no additional info
+
+**Examples:**
+```latex
+\volunteer{Volunteer}{Organization Name}{2023}{}
+\volunteer{Board Member}{Non-profit Organization}{2022--2024}{Additional details.}
 ```
 
 ### Open Source Projects
