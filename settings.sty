@@ -449,10 +449,10 @@
 % Supervision Entry
 % Usage: \supervision{student}{project}{type}{level}{year}{status}{institute}
 % Format:
-%   Student Name .................... Year
-%   Project Title (italic)
-%   Institute / University  (optional)
-%   Type | Level Level | Status  (auto-skips empty)
+%   Student Name(s) ................. Year
+%   Project / Thesis Title (italic)
+%   Institute / University (optional)
+%   Type | Level Level | Status  (auto-skips empty parts)
 
 \newcommand{\supervision}[7]{%
   \@entry*[]%
@@ -460,31 +460,37 @@
   \par \textit{#2}%
   \@cvifempty{#7}{}{\par #7}%
   %
-  % Build the third line dynamically
+  % Build the "Type | Level | Status" line dynamically
   \begingroup
-    \def\line{}%
+    \def\@supline{\@cv@empty}%
     % type
-    \@cvifempty{#3}{}{\edef\line{#3}}%
+    \@cvifempty{#3}{}{%
+      \edef\@supline{#3}%
+    }%
     % level
     \@cvifempty{#4}{}{%
-      \ifx\line\@cv@empty
-        \edef\line{#4\space Level}%
+      \ifx\@supline\@cv@empty
+        \edef\@supline{#4\space Level}%
       \else
-        \edef\line{\line\space|\space #4\space Level}%
+        \edef\@supline{\@supline\space|\space #4\space Level}%
       \fi
     }%
     % status
     \@cvifempty{#6}{}{%
-      \ifx\line\@cv@empty
-        \edef\line{#6}%
+      \ifx\@supline\@cv@empty
+        \edef\@supline{#6}%
       \else
-        \edef\line{\line\space|\space #6}%
+        \edef\@supline{\@supline\space|\space #6}%
       \fi
     }%
     % print only if non-empty
-    \@cvifempty{\line}{}{\par \line}%
+    \ifx\@supline\@cv@empty
+    \else
+      \par \@supline
+    \fi
   \endgroup
 }
+
 
 % Entrepreneurship Entry
 % Usage: \entrepreneurship{name}{description}{role}{focus}{website}

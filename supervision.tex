@@ -8,13 +8,65 @@
 
 \begin{cvsection}{Supervision}  
 
-\supervision{Student Name}{Project Title}{Research}{Master's}{2024}{In Progress}{Kathmandu University}
-\supervision{Student Name}{Project Title}{Research}{Bachelor's}{2024}{In Progress}{Tribhuwan University}
-\supervision{Student Name}{Project Title}{Research}{PhD}{2024}{In Progress}{MIT}
+% ============================
+% Supervision Section Example
+% ============================
 
-\supervision{Student Name}{Project Title}{Research}{Master's}{2023}{Completed}{Pokhara University}
-\supervision{Student Name}{Course Code Final-year Project}{Research}{Bachelor's}{2023}{Completed}{NAMI College}
-\supervision{Student Name}{Thesis Title}{Thesis}{Bachelor's}{2022}{Completed}{Islington College}
+% Section heading (shown in left column)
+ 
+
+% Example 1: Single student with affiliation
+% Arguments:
+% 1 = Student Name
+% 2 = Project/Thesis Title
+% 3 = Type (e.g., Research, Thesis)
+% 4 = Level (Bachelor's, Master's, PhD)
+% 5 = Year
+% 6 = Status (In Progress, Completed)
+% 7 = Affiliation / University
+\supervision
+  {Alice Doe}
+  {Deep Learning for Medical Imaging}
+  {Research}
+  {PhD}
+  {2024}
+  {In Progress}
+  {MIT CSAIL}   % ← affiliation printed here
+
+% Example 2: Multiple students (comma-separated)
+% Affiliation is optional — you can skip with {}
+\supervision
+  {Bob Rai, Charu Sharma}
+  {Computer Vision for Agriculture}
+  {Research}
+  {Master's}
+  {2024}
+  {In Progress}
+  {Kathmandu University}
+
+
+ 
+% Example 4: Completed supervision
+\supervision
+  {Fiona Lama}
+  {Blockchain-based Voting System}
+  {Thesis}
+  {Bachelor's}
+  {2023}
+  {Completed}
+  {Islington College}
+
+% Example 5: Completed, no affiliation provided
+\supervision
+  {Gopal Karki}
+  {Natural Language Processing Toolkit}
+  {Research}
+  {Master's}
+  {2023}
+  {Completed}
+  {}  % ← empty means “no affiliation printed”
+
+
 
 
 \end{cvsection}
