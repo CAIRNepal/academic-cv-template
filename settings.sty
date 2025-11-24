@@ -25,6 +25,8 @@
 \RequirePackage[hyphens]{url}
 \RequirePackage{babel}
 \raggedright
+% Allow flexible page breaking - sections can break across pages
+\raggedbottom
 % http://www.ipgp.fr/~moguilny/LaTeX/fontawesome5Icons.pdf
 \RequirePackage[fixed]{fontawesome5}
 
@@ -39,6 +41,8 @@
 
 \RequirePackage{comment}
 \RequirePackage{etoolbox}
+% --- Prevent large blank spaces before section headers ---
+\RequirePackage{needspace}
 % Formal color scheme - dark gray/black for professional appearance
 % line
 \definecolor{SwishLineColour}{HTML}{2C3E50}
@@ -109,14 +113,23 @@
 \headerscale{1}
 \setlength{\headerspace}{8pt}
 \rubricfont{\Large\bfseries\sffamily}
-\setlength{\rubricspace}{4pt}
-\setlength{\rubricafterspace}{2pt}
+\setlength{\rubricspace}{1pt}
+\setlength{\rubricafterspace}{-8pt}
 \setlength{\subrubricspace}{4pt}
 \setlength{\subrubricbeforespace}{5pt}
+% Rebuild rubric header drawing (unchanged)
 \def\@@rubrichead#1{%
-  \begin{tikzpicture}[baseline]%\
-  \fill[SwishLineColour] (0,0) rectangle (\@almosttextwidth,1.5pt);
-  \node[font={\@rubricfont},inner sep=0pt,text ragged,anchor=south west,text depth=.5ex,text height=1.5ex,text=SwishLineColour] at (0pt,3pt) {#1};
+  \begin{tikzpicture}[baseline]%
+    \fill[SwishLineColour] (0,0) rectangle (\@almosttextwidth,1.5pt);
+    \node[
+      font={\@rubricfont},
+      inner sep=0pt,
+      text ragged,
+      anchor=south west,
+      text depth=.5ex,
+      text height=1.5ex,
+      text=SwishLineColour
+    ] at (0pt,3pt) {#1};
   \end{tikzpicture}%
   \vspace\rubricspace%
 }
@@ -148,10 +161,24 @@
 \prefix{%
 }
 
-\newcommand{\makerubrichead}[1]{\vskip\baselineskip\@@rubrichead{#1}}
+% --- THIS IS THE FIX ---
+% Smarter section heading that avoids huge blank space
+% Allow sections to break across pages - start on current page and continue on next
+\renewcommand{\makerubrichead}[1]{%
+  % Allow page breaks before section headers so sections can flow across pages
+  \allowbreak
+  % No forced page breaks - let LaTeX handle breaks naturally
+  \@@rubrichead{#1}%
+}
 
 % Aliases for clearer naming - cvsection instead of rubric
-\newenvironment{cvsection}[1]{\begin{rubric}{#1}}{\end{rubric}}
+% Allow page breaks within sections so content can flow across pages
+\newenvironment{cvsection}[1]{%
+  \allowbreak
+  \begin{rubric}{#1}%
+}{%
+  \end{rubric}%
+}
 \newcommand{\makecvsection}[1]{\makerubric{#1}}
 \newcommand{\makecvsectionhead}[1]{\makerubrichead{#1}}
 \newcommand{\subcvsection}[1]{\subrubric{#1}}
@@ -235,7 +262,7 @@
   \@entry*[]%
   \textbf{#1}, #2 \hfill #3
   \par \textit{#4}
-  \par #5
+  \par \raggedright #5
   \@cvifempty{#6}{}{\begin{itemize}#6\end{itemize}}%
 }
 
@@ -245,7 +272,7 @@
   \@entry*[]%
   \textbf{#1}, #2 \hfill #3
   \par \textit{#4}
-  \par #5
+  \par \raggedright #5
   \@cvifempty{#6}{}{\begin{itemize}#6\end{itemize}}%
 }
 
@@ -260,7 +287,7 @@
   \@entry*[]%
   \textbf{#1}, #2 \hfill #3
   \par \textit{#4}
-  \par #5
+  \par \raggedright #5
   \@cvifempty{#6}{}{\begin{itemize}#6\end{itemize}}%
 }
 
@@ -274,7 +301,7 @@
   \@entry*[]%
   \textbf{#1} \hfill #4
   \par #2, #3
-  \@cvifempty{#5}{}{\par #5}%
+  \@cvifempty{#5}{}{\par \raggedright #5}%
 }
 
 % Additional Training Entry
@@ -286,8 +313,8 @@
 \newcommand{\training}[4]{%
   \@entry*[]%
   \textbf{#1} \hfill #3
-  \par #2
-  \@cvifempty{#4}{}{\par #4}%
+  \par \raggedright #2
+  \@cvifempty{#4}{}{\par \raggedright #4}%
 }
 
 % Certification Entry
@@ -299,8 +326,8 @@
 \newcommand{\certification}[4]{%
   \@entry*[]%
   \textbf{#1} \hfill #3
-  \par #2
-  \@cvifempty{#4}{}{\par #4}%
+  \par \raggedright #2
+  \@cvifempty{#4}{}{\par \raggedright #4}%
 }
 
 % Professional Development Entry
@@ -312,8 +339,8 @@
 \newcommand{\professionaldev}[4]{%
   \@entry*[]%
   \textbf{#1} \hfill #3
-  \@cvifempty{#2}{}{\par #2}%
-  \@cvifempty{#4}{}{\par #4}%
+  \@cvifempty{#2}{}{\par \raggedright #2}%
+  \@cvifempty{#4}{}{\par \raggedright #4}%
 }
 
 % Award/Honor Entry
@@ -325,8 +352,8 @@
 \newcommand{\award}[4]{%
   \@entry*[]%
   \textbf{#1} \hfill #3
-  \@cvifempty{#2}{}{\par #2}%
-  \@cvifempty{#4}{}{\par #4}%
+  \@cvifempty{#2}{}{\par \raggedright #2}%
+  \@cvifempty{#4}{}{\par \raggedright #4}%
 }
 
 % Presentation Entry
@@ -339,7 +366,7 @@
   \@entry*[]%
   \textbf{#1} \hfill #4
   \par \textit{#2}, #3
-  \@cvifempty{#5}{}{\par #5}%
+  \@cvifempty{#5}{}{\par \raggedright #5}%
 }
 
 % Invited Talk/Interview Entry
@@ -352,7 +379,7 @@
   \@entry*[]%
   \textbf{#1} \hfill #3
   \par \textit{#2}
-  \@cvifempty{#4}{}{\par #4}%
+  \@cvifempty{#4}{}{\par \raggedright #4}%
 }
 
 % Research Grant Entry
@@ -519,7 +546,7 @@
   \@entry*[]%
   \textbf{#1} \hfill #3
   \par \textit{#2}
-  \@cvifempty{#4}{}{\par #4}%
+  \@cvifempty{#4}{}{\par \raggedright #4}%
 }
 
 % Service Role Group - Groups services by role with bulleted venue list
@@ -555,8 +582,8 @@
 \newcommand{\volunteer}[4]{%
   \@entry*[]%
   \textbf{#1} \hfill #3
-  \par #2
-  \@cvifempty{#4}{}{\par #4}%
+  \par \raggedright #2
+  \@cvifempty{#4}{}{\par \raggedright #4}%
 }
 
 % Reference Entry
@@ -598,7 +625,7 @@
       }%
     }%
   }%
-  \@cvifempty{#8}{}{\par #8}%
+  \@cvifempty{#8}{}{\par \raggedright #8}%
 }
 
 % Editorial Service Entry
@@ -612,11 +639,11 @@
   \textbf{#1} \hfill #4
   \par \textit{#2}%
   \@cvifempty{#3}{}{%
-    \@cvifempty{#5}{}{\par \url{#3}}%
-    \@cvifempty{#5}{}{\par \url{#3}. #5}%
+    \@cvifempty{#5}{}{\par \raggedright \url{#3}}%
+    \@cvifempty{#5}{}{\par \raggedright \url{#3}. #5}%
   }%
   \@cvifempty{#3}{}{%
-    \@cvifempty{#5}{}{\par #5}%
+    \@cvifempty{#5}{}{\par \raggedright #5}%
   }%
 }
 
@@ -630,7 +657,7 @@
   \@entry*[]%
   \textbf{#1 #2}%
   \@cvifempty{#3}{}{\ \hfill #3}%
-  \@cvifempty{#4}{}{\par #4}%
+  \@cvifempty{#4}{}{\par \raggedright #4}%
 }
 
 % Last Updated Date
