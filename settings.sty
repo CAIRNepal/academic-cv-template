@@ -161,13 +161,9 @@
 \prefix{%
 }
 
-% --- THIS IS THE FIX ---
-% Smarter section heading that avoids huge blank space
-% Allow sections to break across pages - start on current page and continue on next
+\providecommand{\makerubrichead}[1]{\@@rubrichead{#1}}
 \renewcommand{\makerubrichead}[1]{%
-  % Allow page breaks before section headers so sections can flow across pages
   \allowbreak
-  % No forced page breaks - let LaTeX handle breaks naturally
   \@@rubrichead{#1}%
 }
 
@@ -667,15 +663,16 @@
   \DTMlangsetup[en-US]{ordinal=raise}%
   \newcommand{\lastupdateddate}{\DTMtoday}%
 }{%
-  % Try to load datetime2, but fall back to \today if not available
   \IfFileExists{datetime2.sty}{%
-    \RequirePackage[us]{datetime2}%
+    \RequirePackage{datetime2}%  <-- no style option
     \DTMlangsetup[en-US]{ordinal=raise}%
     \newcommand{\lastupdateddate}{\DTMtoday}%
   }{%
     \newcommand{\lastupdateddate}{\today}%
   }%
 }
+
+
 
 % Set up footer with last updated date (automatic - no command needed)
 % This will automatically appear on every page
