@@ -1,6 +1,8 @@
 # Academic CV Template
 
 A professional LaTeX template for academic curriculum vitae, designed for researchers, academics, and scholars.
+<img width="1703" height="1018" alt="image" src="https://github.com/user-attachments/assets/ce2407d1-cfa2-453f-81ed-c6c7ee50bc39" />
+
 
 ## Overview
 
@@ -26,6 +28,8 @@ This template provides a comprehensive structure for creating academic CVs with 
 - Certifications
 - Professional development
 - References
+
+**Note:** The `main-cv.tex` is the entry point and should be compiled to generate the PDF.
 
 ## Requirements
 
